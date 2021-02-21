@@ -24,6 +24,8 @@ namespace CodeFirst.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.HasDefaultSchema("School");
+
             modelBuilder.Entity<Student>().HasIndex(x => x.StudentId).IsUnique();
             modelBuilder.Entity<StudentCourse>().HasKey(x => new { x.StudentId, x.CourseId });
             #region Relations
