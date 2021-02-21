@@ -4,7 +4,9 @@ using System.Text;
 
 namespace CodeFirst.Data.Entities
 {
-    class Section
-    {
+    public class Section
+    {  
+        public int SectionId { get; set; }
+        public string Name { get; set; }
     }
 }

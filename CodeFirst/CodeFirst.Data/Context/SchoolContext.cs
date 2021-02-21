@@ -1,17 +1,14 @@
 ﻿using CodeFirst.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CodeFirst.Data.Context
 {
     public class SchoolContext :DbContext
     {
-        public static readonly Grade alfa = new Grade  { GradeId = 1, Name = "A-1", Section = "Alfa" };
-        public static readonly Grade alfa2 = new Grade { GradeId = 2, Name = "A-2", Section = "Alfa" };  
-        public static readonly Grade beta = new Grade  { GradeId = 3, Name = "B-1", Section = "Beta" };
-        public static readonly Grade beta2 = new Grade { GradeId = 4, Name = "B-2", Section = "Beta" };
+        public static readonly Grade alfa = new Grade  { GradeId = 1, Name = "A-1" };
+        public static readonly Grade alfa2 = new Grade { GradeId = 2, Name = "A-2" };  
+        public static readonly Grade beta = new Grade  { GradeId = 3, Name = "B-1" };
+        public static readonly Grade beta2 = new Grade { GradeId = 4, Name = "B-2" };
         public SchoolContext(DbContextOptions<SchoolContext> options):base(options)
         {
 
