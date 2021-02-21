@@ -1,5 +1,7 @@
+using CodeFirst.Data.Context;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,7 +15,23 @@ namespace CodeFirst.API
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            //  CreateHostBuilder(args).Build().Run();
+            IHost host = CreateHostBuilder(args).Build();
+            using (var scope=host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    SchoolContext.EnsureCreated(services);
+                }
+                catch (Exception ex)
+                {
+                    var msj = ex.Message;
+                    throw;
+                }
+
+            }
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

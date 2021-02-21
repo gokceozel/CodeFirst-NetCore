@@ -1,5 +1,7 @@
 ﻿using CodeFirst.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CodeFirst.Data.Context
 {
@@ -54,6 +56,12 @@ namespace CodeFirst.Data.Context
             modelBuilder.Entity<Grade>().HasData(alfa2);
             modelBuilder.Entity<Grade>().HasData(beta);
             modelBuilder.Entity<Grade>().HasData(beta2);
+        }
+
+        public static void EnsureCreated(IServiceProvider provider)
+        {
+            var context = provider.GetService<SchoolContext>();
+            context.Database.Migrate();
         }
     }
 }
