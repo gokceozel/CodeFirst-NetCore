@@ -4,7 +4,10 @@ using System.Text;
 
 namespace CodeFirst.Data.Entities.Canteen
 {
-    class Product
+    public class Product
     {
+        public int Code { get; set; }
+        public string Name { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }

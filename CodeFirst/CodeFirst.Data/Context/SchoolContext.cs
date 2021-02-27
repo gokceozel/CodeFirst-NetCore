@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using CodeFirst.Data.Entities.Canteen;
 
 namespace CodeFirst.Data.Context
 {
@@ -19,6 +20,11 @@ namespace CodeFirst.Data.Context
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<StudentCourse> StudentCourses { get; set; }
+        public DbSet<Section> Sections { get; set; }
+        public DbSet<SubSection> SubSections { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +34,7 @@ namespace CodeFirst.Data.Context
             modelBuilder.Entity<Student>().HasIndex(x => x.StudentId).IsUnique();
             modelBuilder.Entity<StudentCourse>().HasKey(x => new { x.StudentId, x.CourseId });
             #region Relations
+
             modelBuilder.Entity<Student>()
                 .HasOne(x => x.Grade)
                 .WithMany(x => x.Students)
@@ -42,6 +49,27 @@ namespace CodeFirst.Data.Context
                 .HasOne(x => x.Course)
                 .WithMany(x => x.StudentCourses)
                 .HasForeignKey(x => x.CourseId);
+
+
+            modelBuilder.Entity<Section>()
+                .HasMany(x => x.SubSections)
+                .WithOne(x => x.Section).HasForeignKey(x => x.SectionCode);
+
+            #region Composite Key
+
+            modelBuilder.Entity<Product>().Property(x => x.Code).ValueGeneratedNever();
+            modelBuilder.Entity<Category>().Property(x => x.Code).ValueGeneratedNever();
+            modelBuilder.Entity<SubCategory>().Property(x => x.Code).ValueGeneratedNever();
+
+            modelBuilder.Entity<Product>().HasKey(x => x.Code);
+            modelBuilder.Entity<Category>().HasKey(x => new { x.Code, x.ProductCode });
+            modelBuilder.Entity<SubCategory>().HasKey(x => new { x.Code, x.CategoryCode, x.ProductCode });
+
+            modelBuilder.Entity<Product>().HasMany(x => x.Categories).WithOne();
+            modelBuilder.Entity<Category>().HasMany(x => x.SubCategories).WithOne().HasForeignKey(x => new { x.CategoryCode, x.ProductCode });
+
+            #endregion
+
 
             #endregion
 
