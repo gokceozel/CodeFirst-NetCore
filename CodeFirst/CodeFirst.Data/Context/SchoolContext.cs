@@ -33,6 +33,7 @@ namespace CodeFirst.Data.Context
 
             modelBuilder.Entity<Student>().HasIndex(x => x.StudentId).IsUnique();
             modelBuilder.Entity<StudentCourse>().HasKey(x => new { x.StudentId, x.CourseId });
+
             #region Relations
 
             modelBuilder.Entity<Student>()
@@ -50,10 +51,11 @@ namespace CodeFirst.Data.Context
                 .WithMany(x => x.StudentCourses)
                 .HasForeignKey(x => x.CourseId);
 
-
+            #region Foreign Key
             modelBuilder.Entity<Section>()
                 .HasMany(x => x.SubSections)
                 .WithOne(x => x.Section).HasForeignKey(x => x.SectionCode);
+            #endregion
 
             #region Composite Key
 
