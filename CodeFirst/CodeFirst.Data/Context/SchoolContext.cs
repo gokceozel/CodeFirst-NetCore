@@ -3,20 +3,28 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using CodeFirst.Data.Entities.Canteen;
+using CodeFirst.Data.Entities.Auth;
 
 namespace CodeFirst.Data.Context
 {
     public class SchoolContext :DbContext
     {
+        #region fiedls
         public static readonly Grade alfa = new Grade  { GradeId = 1, Name = "A-1" };
         public static readonly Grade alfa2 = new Grade { GradeId = 2, Name = "A-2" };  
         public static readonly Grade beta = new Grade  { GradeId = 3, Name = "B-1" };
         public static readonly Grade beta2 = new Grade { GradeId = 4, Name = "B-2" };
+        #endregion
+
+        #region contructors
         public SchoolContext(DbContextOptions<SchoolContext> options):base(options)
         {
 
 
         }
+        #region
+
+        #region Properties
         public DbSet<Student> Students { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Course> Courses { get; set; }
@@ -27,11 +35,14 @@ namespace CodeFirst.Data.Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
 
+
+        #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.HasDefaultSchema("School");
 
+         
             modelBuilder.Entity<Student>().HasIndex(x => x.StudentId).IsUnique();
             modelBuilder.Entity<StudentCourse>().HasKey(x => new { x.StudentId, x.CourseId });
 
@@ -52,6 +63,9 @@ namespace CodeFirst.Data.Context
                 .WithMany(x => x.StudentCourses)
                 .HasForeignKey(x => x.CourseId);
 
+            modelBuilder.Entity<UserAccount>()
+                .HasMany(x => x.UserAccountRoles)
+                .WithOne(x => x.UserAccount);
             #region Foreign Key
             modelBuilder.Entity<Section>()
                 .HasMany(x => x.SubSections)

@@ -1,7 +1,7 @@
 ﻿using CodeFirst.Data.Attributes;
 using System;
 
-namespace CodeFirst.Data.Entities.Auth
+namespace CodeFirst.Data.Entities.Auth.AuthEntites
 {
     public abstract class AuthBase
     {
