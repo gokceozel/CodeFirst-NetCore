@@ -15,6 +15,7 @@ namespace CodeFirst.Data.Context
         public SchoolContext(DbContextOptions<SchoolContext> options):base(options)
         {
 
+
         }
         public DbSet<Student> Students { get; set; }
         public DbSet<Grade> Grades { get; set; }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CodeFirst.Data.Entities.Auth
 {
-    public class UserAccount
+    public class UserAccount : AuthBase
     {
     }
 }
